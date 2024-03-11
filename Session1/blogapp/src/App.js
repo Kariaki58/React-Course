@@ -11,6 +11,7 @@ import { useState, useEffect } from 'react'
 import { format } from 'date-fns'
 import api from './api/posts' // axios instance
 import EditPost from './EditPost'
+import useWindowSize from './hooks/useWindowSize'
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
   const [postBody, setPostBody] = useState('')
   const [editTitle, setEditTitle] = useState('')
   const [editBody, setEditBody] = useState('')
+  const { width } = useWindowSize()
   const history = useNavigate()
 
   useEffect(() => {
@@ -77,7 +79,6 @@ function App() {
       setEditTitle('');
       setEditBody('');
       history('/')
-      console.log("here")
     } catch (err) {
       console.log(`Error: ${err.message}`)
     }
@@ -97,7 +98,7 @@ function App() {
 
   return (
     <div className="App">
-      <Header title="React JS Blog"/>
+      <Header title="React JS Blog" width={width}/>
       <Nav search={search} setSearch={setSearch}/>
       <Routes>
         <Route path='/' element={<Home posts={searchResults}/>} />
