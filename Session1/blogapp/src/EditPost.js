@@ -1,12 +1,23 @@
 import React from 'react'
-import { useEffect, useContext } from 'react'
-import { Link, useParams } from 'react-router-dom'
-import DataContext from './context/DataContext'
+import { Link, useParams, useNavigate } from 'react-router-dom'
+import { useStoreActions, useStoreState } from 'easy-peasy'
+import { format } from 'date-fns'
+import { useEffect } from 'react'
 
 const EditPost = () => {
-    const { posts, handleEdit, editBody, setEditBody, editTitle, setEditTitle } = useContext(DataContext)
+    const editTitle = useStoreState((state) => state.editTitle)
+    const editBody = useStoreState((state) => state.editBody) 
+
+    const editPost = useStoreActions((actions) => actions.editPost)
+    const setEditTitle = useStoreActions((actions) => actions.setEditTitle)
+    const setEditBody = useStoreActions((actions) => actions.setEditBody)
+
     const { id } = useParams()
-    const post = posts.find(post => (post.id).toString() === id);
+
+    const getPostById = useStoreState((state) => state.getPostById);
+    const post = getPostById(id)
+  
+    const history = useNavigate()
 
     useEffect(() => {
         if (post) {
@@ -15,6 +26,14 @@ const EditPost = () => {
         }
     }, [post, setEditTitle, setEditBody])
 
+    const handleEdit = (id) => {
+        const datetime = format(new Date(), 'MMMM dd, yyyy pp');
+        const updatePost = { id, title: editTitle, datetime, body: editBody };
+
+        editPost(updatePost)
+        history(`/post/${id}`)
+    }
+        
   return (
     <main className='NewPost'>
         {editTitle && 
@@ -23,7 +42,7 @@ const EditPost = () => {
             <input type="text" id='postTitle' required value={editTitle} onChange={(e) => setEditTitle(e.target.value)}/>
             <label htmlFor="postBody">Post:</label>
             <textarea id='postBody' required value={editBody} onChange={(e) => setEditBody(e.target.value)}></textarea>
-            <button type='submit' onClick={() => handleEdit(post.id)}>Submit</button>
+            <button type='button' onClick={() => handleEdit(post.id)}>Submit</button>
         </form>
         }
         {!editTitle && 
