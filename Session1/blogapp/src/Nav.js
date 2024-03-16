@@ -1,6 +1,4 @@
 import React from 'react'
-import { useContext } from 'react'
-import DataContext from './context/DataContext'
 import { Link } from 'react-router-dom'
 import { useEffect } from 'react'
 import { useStoreState, useStoreActions } from 'easy-peasy'

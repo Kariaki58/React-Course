@@ -20,6 +20,7 @@ function App() {
   useEffect(() => {
     setPosts(data);
   }, [data])
+  
   return (
     <div className="App">
       <Header title="React JS Blog"/>  

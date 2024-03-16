@@ -21,7 +21,7 @@ const NewPost = () => {
     const newPost = { id, title: postTitle, datetime, body: postBody };
     savePost(newPost)
     history('/')
-}
+  }
 
   return (
     <main className='NewPost'>

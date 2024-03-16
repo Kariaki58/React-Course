@@ -4,6 +4,7 @@ import { useStoreActions, useStoreState } from 'easy-peasy'
 import { format } from 'date-fns'
 import { useEffect } from 'react'
 
+
 const EditPost = () => {
     const editTitle = useStoreState((state) => state.editTitle)
     const editBody = useStoreState((state) => state.editBody) 
